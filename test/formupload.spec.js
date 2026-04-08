@@ -4,19 +4,28 @@ const DashboardPage = require('../pages/dashboardPage');
 const FormPage = require('../pages/formPage');
 
 test('Form Upload Flow', async ({ page }) => {
-    const login = new LoginPage(page);
-    const dashboard = new DashboardPage(page);
-    const form = new FormPage(page);
 
-    await login.goto();
-    await login.login('your-username', 'your-password');
+  const login = new LoginPage(page);
+  const dashboard = new DashboardPage(page);
+  const form = new FormPage(page);
 
-    await dashboard.navigateToAutomation();
-    await dashboard.clickCreate();
+  await page.goto('https://your-app-url');
 
-    await form.createForm();
-    await form.fillForm('Test Input', './test-data/sampleFile.pdf');
-    await form.saveForm();
+  await login.login('your-username', 'your-password');
 
-    await expect(page.locator('text=Uploaded')).toBeVisible();
+  await dashboard.goToAutomation();
+  await dashboard.clickCreate();
+
+  await form.createForm('Sample Form');
+
+  // Fill form
+  await form.fillForm('Test Input', 'tests/sample.pdf');
+
+  // Assertions
+  await expect(page.locator('#textbox')).toHaveValue('Test Input');
+
+  await form.saveForm();
+
+  // Verify upload success
+  await expect(page.locator('.toast-success')).toBeVisible();
 });

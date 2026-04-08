@@ -1,28 +1,30 @@
-const { expect } = require('@playwright/test');
-
 class FormPage {
-    constructor(page) {
-        this.page = page;
-        this.formOption = 'text=Form';
-        this.textBox = 'input[type="text"]';
-        this.fileUpload = 'input[type="file"]';
-        this.saveBtn = 'button:has-text("Save")';
-    }
+  constructor(page) {
+    this.page = page;
+    this.formOption = 'text=Form';
+    this.nameField = '#formName';
+    this.createBtn = '#create';
 
-    async createForm() {
-        await this.page.click(this.formOption);
-    }
+    this.textBox = '#textbox';
+    this.fileUpload = 'input[type="file"]';
+    this.saveBtn = '#save';
+    this.successMsg = '.toast-success';
+  }
 
-    async fillForm(text, filePath) {
-        await this.page.fill(this.textBox, text);
-        await this.page.setInputFiles(this.fileUpload, filePath);
+  async createForm(name) {
+    await this.page.click(this.formOption);
+    await this.page.fill(this.nameField, name);
+    await this.page.click(this.createBtn);
+  }
 
-        await expect(this.textBox).toBeVisible();
-    }
+  async fillForm(text, filePath) {
+    await this.page.fill(this.textBox, text);
+    await this.page.setInputFiles(this.fileUpload, filePath);
+  }
 
-    async saveForm() {
-        await this.page.click(this.saveBtn);
-    }
+  async saveForm() {
+    await this.page.click(this.saveBtn);
+  }
 }
 
 module.exports = FormPage;

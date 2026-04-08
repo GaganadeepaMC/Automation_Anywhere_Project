@@ -1,0 +1,26 @@
+{
+  "name": "automation-ass",
+  "version": "1.0.0",
+  "description": "- Playwright (JavaScript)\r - POM Design Pattern",
+  "main": "playwright.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GaganadeepaMC/Automation_Anywhere_Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/GaganadeepaMC/Automation_Anywhere_Project/issues"
+  },
+  "homepage": "https://github.com/GaganadeepaMC/Automation_Anywhere_Project#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.5.2"
+  }
+}

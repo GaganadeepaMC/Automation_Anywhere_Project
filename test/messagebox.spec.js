@@ -1,22 +1,35 @@
 const { test, expect } = require('@playwright/test');
 const LoginPage = require('../pages/loginPage');
 const DashboardPage = require('../pages/dashboardPage');
-const TaskBotPage = require('../pages/taskBotPage');
+const MessageBoxPage = require('../pages/messageBoxPage');
 
-test('Message Box Task Creation', async ({ page }) => {
-    const login = new LoginPage(page);
-    const dashboard = new DashboardPage(page);
-    const taskBot = new TaskBotPage(page);
+test('Message Box Task Flow', async ({ page }) => {
 
-    await login.goto();
-    await login.login('your-username', 'your-password');
+  const login = new LoginPage(page);
+  const dashboard = new DashboardPage(page);
+  const message = new MessageBoxPage(page);
 
-    await dashboard.navigateToAutomation();
-    await dashboard.clickCreate();
+  await page.goto('https://your-app-url');
 
-    await taskBot.createTaskBot('Test Bot');
-    await taskBot.addMessageBox();
-    await taskBot.saveTask();
+  // Login
+  await login.login('your-username', 'your-password');
 
-    await expect(page.locator('text=Saved')).toBeVisible();
+  // Navigation
+  await dashboard.goToAutomation();
+  await dashboard.clickCreate();
+
+  // Create Task
+  await message.createTask('Test Task');
+
+  // Assertions
+  await expect(page.locator('#taskName')).toBeVisible();
+
+  // Add Message Box
+  await message.addMessageBox();
+
+  // Save
+  await message.saveTask();
+
+  // Validate success
+  await expect(page.locator('.toast-success')).toBeVisible();
 });
